@@ -6,6 +6,7 @@ import { asset, catName, CONTACTS, coverOf, inStock, mpLinks, priceText, rub, va
 import { useCart } from "./cart";
 import { Swatch } from "./chrome";
 import { Photo } from "./ProductCard";
+import { MpLogo } from "./MpLogo";
 
 export function ProductView({ p, related }: { p: Product; related: Product[] }) {
   const cart = useCart();
@@ -127,10 +128,10 @@ export function ProductView({ p, related }: { p: Product; related: Product[] }) 
 
           <div className="flex flex-col gap-2">
             <span className="text-[14px] text-n-300">Или купите на маркетплейсе</span>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {mpLinks(p).map((m) => (
-                <a key={m.label} href={m.href} target="_blank" rel="noopener" className="btn btn-secondary min-h-10">
-                  {m.full}
+                <a key={m.label} href={m.href} target="_blank" rel="noopener" title={m.full} aria-label={`Купить на ${m.full}`} className="btn btn-secondary min-h-10 min-w-0 px-2">
+                  <MpLogo label={m.label} className="h-[15px]" />
                 </a>
               ))}
             </div>

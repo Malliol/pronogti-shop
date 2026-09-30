@@ -4,6 +4,7 @@ import Link from "next/link";
 import { asset, catName, coverOf, inStock, mpLinks, priceText, variantOf, type Product } from "@/lib/catalog";
 import { useCart } from "./cart";
 import { Swatch } from "./chrome";
+import { MpLogo } from "./MpLogo";
 
 export function Photo({ src, alt, className = "" }: { src?: string; alt: string; className?: string }) {
   return (
@@ -56,7 +57,7 @@ export function ProductCard({ p }: { p: Product }) {
         </div>
         <div className="mt-1 flex flex-col gap-[6px] border-t border-n-800 pt-[10px]">
           <span className="text-[12px] text-n-300">Купить на маркетплейсе</span>
-          <div className="grid grid-cols-4 gap-1">
+          <div className="grid grid-cols-2 gap-1">
             {mpLinks(p).map((m) => (
               <a
                 key={m.label}
@@ -64,9 +65,10 @@ export function ProductCard({ p }: { p: Product }) {
                 target="_blank"
                 rel="noopener"
                 title={m.full}
-                className="flex min-h-8 items-center justify-center whitespace-nowrap rounded-sm border border-n-700 text-[12px] text-fg transition-colors hover:border-accent hover:text-a-200"
+                aria-label={`Купить на ${m.full}`}
+                className="flex min-h-9 items-center justify-center rounded-sm border border-n-700 px-2 text-fg transition-colors hover:border-accent"
               >
-                {m.label}
+                <MpLogo label={m.label} className="h-[14px]" />
               </a>
             ))}
           </div>
