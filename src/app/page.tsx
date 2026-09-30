@@ -42,13 +42,14 @@ export default function Home() {
               <Link href={`/product/${p!.slug}/`} className="mb-[10px] inline-block text-[13px] uppercase tracking-[0.05em] text-fg/72 hover:text-a-200">
                 {p!.name} {p!.vol}
               </Link>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-[10px]">
+              {/* десктоп — сетка, мобильный — горизонтальный слайдер от края до края */}
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-[10px] max-md:bleed max-md:flex max-md:snap-x max-md:snap-mandatory max-md:scroll-px-[clamp(16px,5vw,64px)] max-md:overflow-x-auto max-md:pb-1 max-md:[scrollbar-width:none]">
                 {p!.shades!.map((s) => (
                   <Link
                     key={s.uid}
                     href={`/product/${p!.slug}/?c=${s.uid}`}
                     title={`${p!.name}, ${s.name}`}
-                    className="group flex flex-col items-center gap-[6px] text-fg/78 hover:text-fg"
+                    className="group flex flex-col items-center gap-[6px] text-fg/78 hover:text-fg max-md:w-[72px] max-md:flex-none max-md:snap-start"
                   >
                     {s.swatch ? (
                       // eslint-disable-next-line @next/next/no-img-element
