@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin", "cyrillic"], weight: ["400", "500"], va
 
 export const metadata: Metadata = {
   // адрес сайта для og-картинок; на своём домене задать NEXT_PUBLIC_SITE_URL
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://imironru.github.io"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://imiron.ru"),
   title: { default: "Kadilak Neo — базы, гели, топы для маникюра", template: "%s — Kadilak Neo" },
   description: "Базы, гели, топы, жидкий полигель и гель-лаки по адекватным ценам без переплаты за бренд. Оренбург, доставка по России СДЭК и Почтой России.",
   icons: { icon: asset("/logo.png") },
