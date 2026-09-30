@@ -150,7 +150,10 @@ export function ProductView({ p, related }: { p: Product; related: Product[] }) 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
           {related.map((r) => (
             <Link key={r.slug} href={`/product/${r.slug}/`} className="tile flex items-center gap-3 p-[10px] text-fg hover:text-fg">
-              <Photo src={coverOf(r)} alt="" className="size-16 flex-none rounded-sm" />
+              {/* обёртка фиксирует 64×64: у Photo свой w-full, className его не перебивает */}
+              <div className="size-16 flex-none overflow-hidden rounded-sm">
+                <Photo src={coverOf(r)} alt="" />
+              </div>
               <span className="flex flex-col gap-[3px]">
                 <span className="text-[14px] font-medium">{r.name}</span>
                 <span className="text-[13px] text-n-300">{[r.vol, priceText(r)].filter(Boolean).join(" · ")}</span>
