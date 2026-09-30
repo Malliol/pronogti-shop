@@ -121,7 +121,7 @@
   .opt[aria-pressed="true"] { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 50%, transparent); }
   .chip { padding: 7px 12px; border-radius: 999px; font-size: 13px; border: 1px solid var(--kn-n-700); color: var(--kn-text); transition: border-color 140ms ease-out; }
   .chip:hover { border-color: var(--kn-accent); color: var(--kn-text); }
-  .chip[aria-current="true"], .chip[aria-pressed="true"] { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 60%, transparent); color: var(--kn-a-100); }
+  .chip[aria-current="true"], .chip[aria-pressed="true"], .chip[aria-selected="true"] { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 60%, transparent); color: var(--kn-a-100); }
   .prose-legal p { margin: 0 0 12px; }
 }
 

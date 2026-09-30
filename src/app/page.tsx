@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { asset, CATS, PRODUCTS } from "@/lib/catalog";
+import { CATS, PRODUCTS, type Product } from "@/lib/catalog";
+import { Palette } from "@/components/Palette";
 
 // Главная, вариант C (палитра). Палитра собрана из всех серий с оттенками:
 // гель-лаков на сайте пока два, поэтому показываем и гели, и полигель.
 const PALETTE_ORDER = ["gel-lak", "polygel-15", "gel-easy-15", "gel-flame-15", "gel-creamy-15", "gel-opal-15", "gel-50"];
-const palette = PALETTE_ORDER.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter((p) => p?.shades?.length);
+const palette = PALETTE_ORDER.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter((p): p is Product => !!p?.shades?.length);
 
 const TASKS = [
   { v: "strong", label: "Укрепить свои ногти" },
@@ -36,34 +37,7 @@ export default function Home() {
           <h2 className="m-0 text-[24px]">Палитра оттенков</h2>
           <span className="text-[14px] text-fg/72">Нажмите на цвет, чтобы открыть товар</span>
         </div>
-        <div className="flex flex-col gap-6">
-          {palette.map((p) => (
-            <div key={p!.slug}>
-              <Link href={`/product/${p!.slug}/`} className="mb-[10px] inline-block text-[13px] uppercase tracking-[0.05em] text-fg/72 hover:text-a-200">
-                {p!.name} {p!.vol}
-              </Link>
-              {/* десктоп — сетка, мобильный — горизонтальный слайдер от края до края */}
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-[10px] max-md:bleed max-md:flex max-md:snap-x max-md:snap-mandatory max-md:scroll-px-[clamp(16px,5vw,64px)] max-md:overflow-x-auto max-md:pb-1 max-md:[scrollbar-width:none]">
-                {p!.shades!.map((s) => (
-                  <Link
-                    key={s.uid}
-                    href={`/product/${p!.slug}/?c=${s.uid}`}
-                    title={`${p!.name}, ${s.name}`}
-                    className="group flex flex-col items-center gap-[6px] text-fg/78 hover:text-fg max-md:w-[72px] max-md:flex-none max-md:snap-start"
-                  >
-                    {s.swatch ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={asset(s.swatch)} alt="" loading="lazy" className="ring-swatch aspect-square w-full rounded-md object-cover transition-transform duration-150 ease-out group-hover:-translate-y-0.5" />
-                    ) : (
-                      <span className="ring-swatch aspect-square w-full rounded-md bg-n-800" />
-                    )}
-                    <span className="text-center text-[11px] leading-[14px]">{s.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Palette series={palette} />
       </section>
 
       <section className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 pt-14 pb-16">
