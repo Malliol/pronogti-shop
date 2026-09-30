@@ -1,0 +1,51 @@
+[
+  {
+    "slug": "basa0",
+    "title": "База прозрачная",
+    "url": "https://pronogti-shop.ru/basa0",
+    "storepart": "156878569411",
+    "count": 5
+  },
+  {
+    "slug": "gel20",
+    "title": "Гель моделирующий 15 гр",
+    "url": "https://pronogti-shop.ru/gel20",
+    "storepart": "726056365251",
+    "count": 24
+  },
+  {
+    "slug": "gel50",
+    "title": "Гель моделирующий 50гр",
+    "url": "https://pronogti-shop.ru/gel50",
+    "storepart": "735470598371",
+    "count": 10
+  },
+  {
+    "slug": "polygel2",
+    "title": "Жидкий полигель для укрепления",
+    "url": "https://pronogti-shop.ru/polygel2",
+    "storepart": "483400778571",
+    "count": 14
+  },
+  {
+    "slug": "gel-lak",
+    "title": "Гель-лаки",
+    "url": "https://pronogti-shop.ru/gel-lak",
+    "storepart": "328301404951",
+    "count": 2
+  },
+  {
+    "slug": "other",
+    "title": "Прочие товары",
+    "url": "https://pronogti-shop.ru/other",
+    "storepart": "467221471681",
+    "count": 2
+  },
+  {
+    "slug": "top",
+    "title": "Топ",
+    "url": "https://pronogti-shop.ru/top",
+    "storepart": "228561967151",
+    "count": 3
+  }
+]
