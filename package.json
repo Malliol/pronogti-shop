@@ -1,0 +1,29 @@
+{
+  "name": "pronogti-shop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Интернет-магазин Kadilak Neo (замена pronogti-shop.ru) — базы, гели, топы, полигель, гель-лаки",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "catalog": "node scripts/build-catalog.mjs",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.3.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.7",
+    "sharp": "^0.35.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5"
+  }
+}

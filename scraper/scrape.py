@@ -3,7 +3,7 @@
 import csv, html, json, re, time, urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent
 DATA, IMG = ROOT / "data", ROOT / "images"
 SITE = "https://pronogti-shop.ru"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128 Safari/537.36"}

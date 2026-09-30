@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Дизайн-токены Kadilak Neo (основа — Nocturne, см. design/README.md).
+   Сырые значения в --kn-*, темы переключаются атрибутом data-theme на <html>.
+   Ramps инвертированы между темами: в обеих n-300 — приглушённый текст,
+   n-700/800 — границы, a-900 — тонированная заливка, a-100/200 — текст на ней. */
+:root,
+:root[data-theme="light"] {
+  --kn-bg: #f7f5f7;
+  --kn-surface: #fdfcfd;
+  --kn-text: #1d1b22;
+  --kn-accent: #e0306a;
+  --kn-divider: color-mix(in srgb, #1d1b22 12%, transparent);
+  --kn-n-100: #292b31; --kn-n-200: #3f424d; --kn-n-300: #595d6c; --kn-n-400: #75798c; --kn-n-500: #9397ab;
+  --kn-n-600: #b2b6ca; --kn-n-700: #d5d6de; --kn-n-800: #e8e7ec; --kn-n-900: #f1f0f4;
+  --kn-a-100: #4a0f24; --kn-a-200: #6e1636; --kn-a-300: #a3214f; --kn-a-400: #c92a61; --kn-a-500: #e0306a;
+  --kn-a-600: #ef6590; --kn-a-700: #f5a3bd; --kn-a-800: #f9cddb; --kn-a-900: #fce8ee;
+  --kn-shadow-md: 0 0 0 1px #e8e7ec, 0 6px 18px rgba(29, 27, 34, 0.08);
+  --kn-shadow-lg: 0 0 0 1px #d5d6de, 0 16px 40px rgba(29, 27, 34, 0.14);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --kn-bg: #161826;
+  --kn-surface: #232532;
+  --kn-text: #e9e9ed;
+  --kn-accent: #e8457a;
+  --kn-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+  --kn-n-100: #f3f5fe; --kn-n-200: #e4e7f5; --kn-n-300: #cfd3e5; --kn-n-400: #b2b6ca; --kn-n-500: #9397ab;
+  --kn-n-600: #75798c; --kn-n-700: #595d6c; --kn-n-800: #3f424d; --kn-n-900: #292b31;
+  --kn-a-100: #fdeef3; --kn-a-200: #fbd3e0; --kn-a-300: #f7a9c3; --kn-a-400: #f27ba2; --kn-a-500: #e8457a;
+  --kn-a-600: #c2305f; --kn-a-700: #922448; --kn-a-800: #611a32; --kn-a-900: #36121f;
+  --kn-shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0, 0, 0, 0.55);
+  --kn-shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0, 0, 0, 0.65);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --breakpoint-*: initial;
+  --breakpoint-md: 720px; /* порог мобильной версии из макета */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --color-bg: var(--kn-bg);
+  --color-surface: var(--kn-surface);
+  --color-fg: var(--kn-text);
+  --color-accent: var(--kn-accent);
+  --color-divider: var(--kn-divider);
+  --color-n-100: var(--kn-n-100); --color-n-200: var(--kn-n-200); --color-n-300: var(--kn-n-300);
+  --color-n-400: var(--kn-n-400); --color-n-500: var(--kn-n-500); --color-n-600: var(--kn-n-600);
+  --color-n-700: var(--kn-n-700); --color-n-800: var(--kn-n-800); --color-n-900: var(--kn-n-900);
+  --color-a-100: var(--kn-a-100); --color-a-200: var(--kn-a-200); --color-a-300: var(--kn-a-300);
+  --color-a-400: var(--kn-a-400); --color-a-500: var(--kn-a-500); --color-a-600: var(--kn-a-600);
+  --color-a-700: var(--kn-a-700); --color-a-800: var(--kn-a-800); --color-a-900: var(--kn-a-900);
+  --shadow-md: var(--kn-shadow-md);
+  --shadow-lg: var(--kn-shadow-lg);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+}
+
+@layer base {
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--kn-text);
+    background:
+      radial-gradient(1200px 720px at 82% -160px, color-mix(in srgb, var(--kn-a-900) 90%, transparent), transparent 60%),
+      var(--kn-bg);
+    background-attachment: fixed;
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4 { font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; }
+  a { color: var(--kn-a-300); text-decoration: none; }
+  a:hover { color: var(--kn-a-200); }
+  button { cursor: pointer; }
+  :focus { outline: none; }
+  :focus-visible { outline: 2px solid var(--kn-accent); outline-offset: 2px; }
+  ::selection { background: color-mix(in srgb, var(--kn-accent) 30%, transparent); }
+}
+
+/* Кнопки и поля дизайн-системы (Nocturne styles.css) */
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--kn-text);
+    background: transparent; border: 1px solid transparent;
+    padding: 5.6px 10px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+    transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-primary { color: var(--kn-accent); border-color: var(--kn-accent); }
+  .btn-primary:hover { color: var(--kn-accent); background: color-mix(in srgb, var(--kn-accent) 12%, transparent); }
+  .btn-primary:active { background: color-mix(in srgb, var(--kn-accent) 22%, transparent); }
+  .btn-secondary { border-color: var(--kn-divider); }
+  .btn-secondary:hover { color: var(--kn-text); background: color-mix(in srgb, var(--kn-text) 7%, transparent); }
+  .btn-ghost { color: var(--kn-accent); padding-inline: 2.8px; }
+  .btn-ghost:hover { color: var(--kn-accent); background: color-mix(in srgb, var(--kn-accent) 10%, transparent); }
+  .btn-icon { width: 40px; height: 40px; padding: 0; }
+  .btn-block { width: 100%; }
+
+  .field > label { display: block; font-size: 12px; margin-bottom: 5px; color: color-mix(in srgb, var(--kn-text) 70%, transparent); }
+  .input {
+    width: 100%; min-height: 36px; padding: 6px 10px; font: inherit; font-size: 14px;
+    color: var(--kn-text); caret-color: var(--kn-accent); background: var(--kn-surface);
+    border: 1px solid var(--kn-divider); border-radius: 8px;
+  }
+  .input:hover { border-color: color-mix(in srgb, var(--kn-text) 45%, transparent); }
+  .input:focus-visible { border-color: var(--kn-accent); outline-offset: 0; }
+
+  /* Контейнер страницы: max 1200, отступ clamp(16px,5vw,64px) */
+  .wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 64px); }
+  .bleed { margin-inline: calc(-1 * clamp(16px, 5vw, 64px)); padding-inline: clamp(16px, 5vw, 64px); }
+  .kicker { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--kn-accent); }
+  .tnum { font-feature-settings: "tnum" 1; }
+  .ring-swatch { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--kn-text) 18%, transparent); }
+  /* Карточки-кнопки: граница n-800 → accent-700 на hover */
+  .tile { background: var(--kn-surface); border: 1px solid var(--kn-n-800); border-radius: 8px; transition: border-color 140ms ease-out; }
+  .tile:hover { border-color: var(--kn-a-700); }
+  /* Опции-«строки» (задачи, подбор): граница n-700 → accent + тонировка */
+  .opt { border: 1px solid var(--kn-n-700); border-radius: 8px; transition: border-color 140ms ease-out, background-color 140ms ease-out; }
+  .opt:hover { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 40%, transparent); }
+  .opt[aria-pressed="true"] { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 50%, transparent); }
+  .chip { padding: 7px 12px; border-radius: 999px; font-size: 13px; border: 1px solid var(--kn-n-700); color: var(--kn-text); transition: border-color 140ms ease-out; }
+  .chip:hover { border-color: var(--kn-accent); color: var(--kn-text); }
+  .chip[aria-current="true"], .chip[aria-pressed="true"] { border-color: var(--kn-accent); background: color-mix(in srgb, var(--kn-a-900) 60%, transparent); color: var(--kn-a-100); }
+  .prose-legal p { margin: 0 0 12px; }
+}

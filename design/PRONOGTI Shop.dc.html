@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="_ds/nocturne-157e783a-a620-454a-bd4d-d118bdfe4fed/styles.css">
+<script src="_ds/nocturne-157e783a-a620-454a-bd4d-d118bdfe4fed/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+:root[data-theme="light"]{--color-bg:#f7f5f7;--color-surface:#fdfcfd;--color-text:#1d1b22;--color-accent:#e0306a;--color-divider:color-mix(in srgb,#1d1b22 12%,transparent);
+--color-neutral-100:#292b31;--color-neutral-200:#3f424d;--color-neutral-300:#595d6c;--color-neutral-400:#75798c;--color-neutral-500:#9397ab;--color-neutral-600:#b2b6ca;--color-neutral-700:#d5d6de;--color-neutral-800:#e8e7ec;--color-neutral-900:#f1f0f4;
+--color-accent-100:#4a0f24;--color-accent-200:#6e1636;--color-accent-300:#a3214f;--color-accent-400:#c92a61;--color-accent-500:#e0306a;--color-accent-600:#ef6590;--color-accent-700:#f5a3bd;--color-accent-800:#f9cddb;--color-accent-900:#fce8ee;
+--shadow-sm:0 0 0 1px #e8e7ec;--shadow-md:0 0 0 1px #e8e7ec,0 6px 18px rgba(29,27,34,0.08);--shadow-lg:0 0 0 1px #d5d6de,0 16px 40px rgba(29,27,34,0.14);color-scheme:light}
+:root[data-theme="dark"]{--color-accent:#e8457a;--color-accent-100:#fdeef3;--color-accent-200:#fbd3e0;--color-accent-300:#f7a9c3;--color-accent-400:#f27ba2;--color-accent-500:#e8457a;--color-accent-600:#c2305f;--color-accent-700:#922448;--color-accent-800:#611a32;--color-accent-900:#36121f;color-scheme:dark}
+body{margin:0;background:radial-gradient(1200px 720px at 82% -160px,color-mix(in srgb,var(--color-accent-900) 90%,transparent),transparent 60%),var(--color-bg);background-attachment:fixed;color:var(--color-text);font-family:var(--font-body);text-wrap:pretty}
+a{color:var(--color-accent-300);text-decoration:none}
+a:hover{color:var(--color-accent-200)}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<nav style="position:sticky;top:0;z-index:20;display:flex;flex-wrap:nowrap;align-items:center;gap:var(--space-4) var(--space-8);padding:14px clamp(16px,5vw,64px);background:color-mix(in srgb,var(--color-bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-divider)">
+  <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-weight:500;font-size:17px;letter-spacing:0.04em"><img src="assets/kadilak-neo-logo.png" alt="Kadilak Neo" width="40" height="40" style="display:block;width:40px;height:40px">Kadilak Neo</button>
+  <div style="display:flex;gap:var(--space-6);flex:1;min-width:0;overflow-x:auto;font-size:14px">
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+    <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+      <button onClick="{{ l.go }}" style="all:unset;cursor:pointer;white-space:nowrap;padding:6px 0;color:{{ l.fg }}" style-hover="color:var(--color-accent-200)">{{ l.label }}</button>
+    </sc-for>
+    </sc-if>
+  </div>
+  <button onClick="{{ toggleTheme }}" title="{{ themeTitle }}" aria-label="{{ themeTitle }}" class="btn btn-ghost btn-icon" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center">
+    <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.36A88,88,0,0,1,65.64,67.09,89,89,0,0,1,96.3,43.64,104,104,0,0,0,212.36,159.7,89,89,0,0,1,188.9,190.36Z"></path></svg></sc-if>
+    <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+  </button>
+  <button class="btn btn-primary" onClick="{{ openCart }}" style="display:flex;align-items:center;gap:8px;min-height:40px">
+    <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H80V96a8,8,0,0,0,16,0V80h64V96a8,8,0,0,0,16,0V80h40Z"></path></svg>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}"><span>Корзина</span></sc-if>
+    <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}"><span style="font-feature-settings:'tnum' 1;background:var(--color-accent-800);color:var(--color-accent-100);border-radius:999px;padding:0 7px;font-size:12px;line-height:18px">{{ cartCount }}</span></sc-if>
+  </button>
+</nav>
+
+<main style="flex:1;width:100%;max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,64px);box-sizing:border-box">
+
+<!-- ===== HOME A: editorial ===== -->
+<sc-if value="{{ homeA }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:clamp(48px,9vw,112px) 0 clamp(40px,6vw,72px)">
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(38px,6.2vw,84px);line-height:1.08;letter-spacing:-0.02em;margin:0;max-width:16ch">Базы, гели, топы <span style="color:var(--color-neutral-300)">по адекватным ценам без переплаты за бренд</span></h1>
+    <p style="font-size:17px;line-height:28px;margin:28px 0 0;max-width:52ch;color:var(--color-neutral-200)">Регулярное обновление ассортимента. Отличное качество по доступной цене!</p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:28px">
+      <button class="btn btn-primary" onClick="{{ goCatalog }}">Перейти в каталог</button>
+      <button class="btn btn-ghost" onClick="{{ goQuiz }}">Помочь с выбором</button>
+    </div>
+  </section>
+  <section style="padding-bottom:64px">
+    <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent);margin-bottom:12px">Что у нас есть</div>
+    <sc-for list="{{ catRows }}" as="c" hint-placeholder-count="6">
+      <button onClick="{{ c.go }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:22px 8px;border-top:1px solid var(--color-neutral-800)" style-hover="background:color-mix(in srgb,var(--color-accent-900) 45%,transparent)">
+        <span style="font-size:14px;color:var(--color-accent);font-feature-settings:'tnum' 1">{{ c.num }}</span>
+        <span style="display:flex;flex-wrap:wrap;gap:4px 20px;align-items:baseline">
+          <span style="font-family:var(--font-heading);font-weight:500;font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.01em">{{ c.name }}</span>
+          <span style="font-size:14px;color:var(--color-neutral-300)">{{ c.note }}</span>
+        </span>
+        <span style="font-size:14px;color:var(--color-neutral-300);white-space:nowrap">{{ c.count }} →</span>
+      </button>
+    </sc-for>
+  </section>
+</sc-if>
+
+<!-- ===== HOME B: catalog-first ===== -->
+<sc-if value="{{ homeB }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(36px,6vw,72px) 0 32px;display:flex;flex-wrap:wrap;gap:24px;align-items:end;justify-content:space-between">
+    <div style="max-width:640px">
+      <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(30px,4.2vw,52px);line-height:1.1;letter-spacing:-0.015em;margin:0">Базы, гели, топы по адекватным ценам без переплаты за бренд</h1>
+      <p style="font-size:16px;line-height:26px;margin:16px 0 0;color:var(--color-neutral-200)">Регулярное обновление ассортимента. Отличное качество по доступной цене!</p>
+    </div>
+    <button class="btn btn-ghost" onClick="{{ goQuiz }}">Не знаете, что выбрать? →</button>
+  </section>
+  <section style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;padding-bottom:56px">
+    <sc-for list="{{ catRows }}" as="c" hint-placeholder-count="6">
+      <button onClick="{{ c.go }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;background:var(--color-surface);border:1px solid var(--color-neutral-800);border-radius:var(--radius-md);overflow:hidden" style-hover="border-color:var(--color-accent-700)">
+        <div class="lighten" style="aspect-ratio:4/3;width:100%"><image-slot id="{{ c.slotId }}" shape="rect" placeholder="Фото категории"></image-slot></div>
+        <div style="padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-weight:500;font-size:15px">{{ c.name }}</span>
+          <span style="font-size:13px;color:var(--color-neutral-300)">{{ c.count }} товаров</span>
+        </div>
+      </button>
+    </sc-for>
+  </section>
+  <section style="padding-bottom:64px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:16px">
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:26px;margin:0">Популярное</h2>
+      <button class="btn btn-ghost" onClick="{{ goCatalog }}">Весь каталог</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+      <sc-for list="{{ popular }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.open }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;background:var(--color-surface);border:1px solid var(--color-neutral-800);border-radius:var(--radius-md);overflow:hidden" style-hover="border-color:var(--color-accent-700)">
+          <div class="lighten" style="aspect-ratio:1/1;width:100%"><image-slot id="{{ p.slotId }}" shape="rect" placeholder="Фото товара"></image-slot></div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-300)">{{ p.catName }}</span>
+            <span style="font-weight:500;font-size:15px;line-height:21px">{{ p.name }}</span>
+            <span style="font-size:13px;color:var(--color-neutral-300)">{{ p.vol }}</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+              <span style="font-size:17px;font-weight:500">{{ p.priceText }}</span>
+              <span style="display:flex;gap:3px;align-items:center">
+                <sc-for list="{{ p.dots }}" as="d" hint-placeholder-count="0"><span style="width:12px;height:12px;border-radius:50%;background:{{ d.h }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 20%,transparent)"></span></sc-for>
+                <span style="font-size:12px;color:var(--color-neutral-300);margin-left:3px">{{ p.more }}</span>
+              </span>
+            </div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ===== HOME C: palette-led ===== -->
+<sc-if value="{{ homeC }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:clamp(40px,7vw,88px) 0 40px">
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(34px,5vw,64px);line-height:1.08;letter-spacing:-0.02em;margin:0;max-width:18ch">Базы, гели, топы по адекватным ценам без переплаты за бренд</h1>
+    <p style="font-size:16px;line-height:26px;margin:20px 0 0;max-width:52ch;color:var(--color-neutral-200)">Регулярное обновление ассортимента. Отличное качество по доступной цене!</p>
+  </section>
+  <section style="margin:0 calc(-1 * clamp(16px,5vw,64px));padding:36px clamp(16px,5vw,64px);background:var(--color-accent-900);border-top:1px solid var(--color-accent-800);border-bottom:1px solid var(--color-accent-800)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:20px">
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:24px;margin:0">Палитра гель-лаков</h2>
+      <span style="font-size:14px;color:color-mix(in srgb,var(--color-text) 72%,transparent)">Нажмите на цвет, чтобы открыть товар</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:10px">
+      <sc-for list="{{ lakPalette }}" as="c" hint-placeholder-count="16">
+        <button onClick="{{ c.open }}" title="{{ c.n }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center">
+          <span style="width:100%;aspect-ratio:1/1;border-radius:var(--radius-md);background:{{ c.h }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 18%,transparent)" style-hover="transform:translateY(-2px)"></span>
+          <span style="font-size:11px;color:color-mix(in srgb,var(--color-text) 78%,transparent);text-align:center;line-height:14px">{{ c.n }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;padding:56px 0 64px">
+    <div>
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:24px;margin:0 0 8px">Что нужно сделать?</h2>
+      <p style="font-size:15px;line-height:24px;color:var(--color-neutral-300);margin:0 0 20px">Выберите задачу — соберём набор.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ taskShortcuts }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.go }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--color-neutral-700);border-radius:var(--radius-md)" style-hover="border-color:var(--color-accent);background:color-mix(in srgb,var(--color-accent-900) 40%,transparent)">
+            <span style="font-size:15px">{{ t.label }}</span><span style="color:var(--color-accent)">→</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:24px;margin:0 0 20px">Категории</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ catRows }}" as="c" hint-placeholder-count="6">
+          <button class="btn btn-secondary" onClick="{{ c.go }}">{{ c.name }} <span style="color:var(--color-neutral-300)">{{ c.count }}</span></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<!-- shared home: questions + delivery -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding-bottom:40px">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="3">
+      <button onClick="{{ f.go }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:12px;justify-content:space-between;padding:18px;background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-neutral-800)" style-hover="border-color:var(--color-accent-700)">
+        <span style="font-size:16px;line-height:23px">{{ f.q }}</span>
+        <span style="font-size:14px;color:var(--color-accent-300)">{{ f.a }} →</span>
+      </button>
+    </sc-for>
+  </section>
+  <section style="display:flex;flex-wrap:wrap;gap:12px 40px;padding:24px 0 64px;border-top:1px solid var(--color-divider);font-size:14px;color:var(--color-neutral-200)">
+    <span>Сборка и отправка — 1–3 рабочих дня</span>
+    <span>СДЭК и Почта России</span>
+    <span>Доставка в среднем 280–350 ₽</span>
+    <button onClick="{{ goDelivery }}" style="all:unset;cursor:pointer;color:var(--color-accent-300)">О доставке →</button>
+  </section>
+</sc-if>
+
+<!-- ===== CATALOG ===== -->
+<sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:40px 0 20px">
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(30px,4vw,44px);letter-spacing:-0.015em;margin:0">{{ catTitle }}</h1>
+    <p style="font-size:15px;color:var(--color-neutral-300);margin:10px 0 0">{{ catNote }}</p>
+  </section>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding-bottom:20px">
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
+        <button onClick="{{ c.go }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;font-size:13px;border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }}" style-hover="border-color:var(--color-accent)">{{ c.name }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--color-neutral-300)">
+      <span>Сортировка:</span>
+      <sc-for list="{{ sortOpts }}" as="s" hint-placeholder-count="3">
+        <button onClick="{{ s.go }}" style="all:unset;cursor:pointer;padding:6px 8px;border-radius:var(--radius-sm);color:{{ s.fg }};background:{{ s.bg }}">{{ s.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <section style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding-bottom:64px">
+    <sc-for list="{{ catalog }}" as="p" hint-placeholder-count="8">
+      <div style="display:flex;flex-direction:column;background:var(--color-surface);border:1px solid var(--color-neutral-800);border-radius:var(--radius-md);overflow:hidden" style-hover="border-color:var(--color-accent-700)">
+        <button onClick="{{ p.open }}" style="all:unset;cursor:pointer;display:block" class="lighten"><div style="aspect-ratio:1/1;width:100%"><image-slot id="{{ p.slotId }}" shape="rect" placeholder="Фото товара"></image-slot></div></button>
+        <div style="padding:14px;display:flex;flex-direction:column;gap:6px;flex:1">
+          <span style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-300)">{{ p.catName }}</span>
+          <button onClick="{{ p.open }}" style="all:unset;cursor:pointer;font-weight:500;font-size:15px;line-height:21px">{{ p.name }}</button>
+          <span style="font-size:13px;color:var(--color-neutral-300)">{{ p.vol }}</span>
+          <span style="display:flex;gap:3px;align-items:center;min-height:14px">
+            <sc-for list="{{ p.dots }}" as="d" hint-placeholder-count="0"><span style="width:12px;height:12px;border-radius:50%;background:{{ d.h }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 20%,transparent)"></span></sc-for>
+            <span style="font-size:12px;color:var(--color-neutral-300);margin-left:3px">{{ p.more }}</span>
+          </span>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px">
+            <span style="font-size:17px;font-weight:500">{{ p.priceText }}</span>
+            <button class="btn btn-secondary" onClick="{{ p.quick }}">{{ p.quickLabel }}</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding-top:10px;margin-top:4px;border-top:1px solid var(--color-neutral-800)">
+            <span style="font-size:12px;color:var(--color-neutral-300)">Купить на маркетплейсе</span>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px">
+              <sc-for list="{{ p.mp }}" as="m" hint-placeholder-count="4">
+                <a href="{{ m.href }}" target="_blank" title="{{ m.full }}" style="display:flex;align-items:center;justify-content:center;min-height:32px;border:1px solid var(--color-neutral-700);border-radius:var(--radius-sm);font-size:12px;color:var(--color-text);white-space:nowrap" style-hover="border-color:var(--color-accent);color:var(--color-accent-200)">{{ m.label }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<!-- ===== PRODUCT ===== -->
+<sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;gap:8px;font-size:13px;color:var(--color-neutral-300);padding:24px 0 20px;flex-wrap:wrap">
+    <button onClick="{{ goCatalog }}" style="all:unset;cursor:pointer;color:var(--color-accent-300)">Каталог</button><span>/</span>
+    <button onClick="{{ prod.goCat }}" style="all:unset;cursor:pointer;color:var(--color-accent-300)">{{ prod.catName }}</button><span>/</span><span>{{ prod.name }}</span>
+  </div>
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,5vw,64px);padding-bottom:56px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="lighten" style="aspect-ratio:1/1;width:100%;border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface)"><image-slot id="{{ prod.slotId }}" shape="rect" placeholder="Фото товара"></image-slot></div>
+      <sc-if value="{{ prod.hasColors }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:14px;padding:14px;border-radius:var(--radius-md);border:1px solid var(--color-neutral-800)">
+          <span style="width:56px;height:56px;border-radius:var(--radius-md);flex:none;background:{{ prod.colorHex }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 20%,transparent)"></span>
+          <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:500">{{ prod.colorName }}</span><span style="font-size:13px;color:var(--color-neutral-300)">Оттенок на экране может немного отличаться</span></span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div>
+        <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent)">{{ prod.catName }}</div>
+        <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(28px,3.4vw,40px);line-height:1.12;letter-spacing:-0.015em;margin:10px 0 6px">{{ prod.name }}</h1>
+        <div style="font-size:15px;color:var(--color-neutral-300)">{{ prod.vol }}</div>
+      </div>
+      <div style="font-size:30px;font-weight:500;font-feature-settings:'tnum' 1">{{ prod.priceText }}</div>
+      <sc-if value="{{ prod.hasColors }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font-size:14px;margin-bottom:10px">Цвет: <span style="color:var(--color-neutral-300)">{{ prod.colorName }}</span> <span style="color:var(--color-neutral-400)">· {{ prod.colorCount }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ prod.swatches }}" as="s" hint-placeholder-count="8">
+              <button onClick="{{ s.pick }}" title="{{ s.n }}" style="all:unset;cursor:pointer;width:40px;height:40px;border-radius:50%;box-sizing:border-box;padding:3px;border:2px solid {{ s.ring }}"><span style="display:block;width:100%;height:100%;border-radius:50%;background:{{ s.h }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 20%,transparent)"></span></button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <div style="display:flex;align-items:center;border:1px solid var(--color-neutral-700);border-radius:var(--radius-md);height:40px">
+          <button onClick="{{ qtyDec }}" style="all:unset;cursor:pointer;width:40px;text-align:center;font-size:18px" aria-label="Меньше">−</button>
+          <span style="min-width:28px;text-align:center;font-feature-settings:'tnum' 1">{{ qty }}</span>
+          <button onClick="{{ qtyInc }}" style="all:unset;cursor:pointer;width:40px;text-align:center;font-size:18px" aria-label="Больше">+</button>
+        </div>
+        <button class="btn btn-primary" onClick="{{ addCurrent }}" style="min-height:40px;padding-inline:22px">{{ addLabel }}</button>
+        <a href="https://t.me/+Lbfz2WjDNkM3YTli" target="_blank" class="btn btn-ghost" style="min-height:40px;display:inline-flex;align-items:center">Спросить менеджера</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:14px;color:var(--color-neutral-300)">Или купите на маркетплейсе</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ prod.mp }}" as="m" hint-placeholder-count="4">
+            <a href="{{ m.href }}" target="_blank" class="btn btn-secondary" style="min-height:40px;display:inline-flex;align-items:center">{{ m.full }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <p style="font-size:15px;line-height:25px;color:var(--color-neutral-200);margin:0;max-width:56ch">{{ prod.desc }}</p>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--color-neutral-300);padding-top:16px;border-top:1px solid var(--color-divider)">
+        <span>Отправка 1–3 рабочих дня после оплаты · СДЭК или Почта России</span>
+        <span>Возврат товара надлежащего качества — 7 дней после получения</span>
+      </div>
+    </div>
+  </section>
+  <section style="padding-bottom:64px">
+    <h2 style="font-family:var(--font-heading);font-weight:500;font-size:22px;margin:0 0 16px">С этим берут</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+      <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
+        <button onClick="{{ p.open }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;padding:10px;background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-neutral-800)" style-hover="border-color:var(--color-accent-700)">
+          <div class="lighten" style="width:64px;height:64px;flex:none;border-radius:var(--radius-sm);overflow:hidden"><image-slot id="{{ p.slotId }}" shape="rect" placeholder="Фото"></image-slot></div>
+          <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:500">{{ p.name }}</span><span style="font-size:13px;color:var(--color-neutral-300)">{{ p.vol }} · {{ p.priceText }}</span></span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ===== QUIZ ===== -->
+<sc-if value="{{ isQuiz }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:48px 0 72px;max-width:760px">
+    <sc-if value="{{ quizAsking }}" hint-placeholder-val="{{ true }}">
+      <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent)">Подбор · шаг {{ quizStepNum }} из 2</div>
+      <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(28px,3.6vw,40px);letter-spacing:-0.015em;margin:12px 0 28px">{{ quizQ }}</h1>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+        <sc-for list="{{ quizOpts }}" as="o" hint-placeholder-count="4">
+          <button onClick="{{ o.pick }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:18px;border:1px solid var(--color-neutral-700);border-radius:var(--radius-md);min-height:96px" style-hover="border-color:var(--color-accent);background:color-mix(in srgb,var(--color-accent-900) 40%,transparent)">
+            <span style="font-size:17px;font-weight:500">{{ o.label }}</span>
+            <span style="font-size:14px;line-height:20px;color:var(--color-neutral-300)">{{ o.hint }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ quizCanBack }}" hint-placeholder-val="{{ false }}"><button class="btn btn-ghost" onClick="{{ quizBack }}" style="margin-top:20px">← Назад</button></sc-if>
+    </sc-if>
+    <sc-if value="{{ quizDone }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent)">Ваш набор</div>
+      <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(28px,3.6vw,40px);letter-spacing:-0.015em;margin:12px 0 10px">{{ quizTitle }}</h1>
+      <p style="font-size:15px;line-height:24px;color:var(--color-neutral-300);margin:0 0 24px;max-width:56ch">{{ quizNote }}</p>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ quizSet }}" as="p" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--color-neutral-800)">
+            <span style="font-size:13px;color:var(--color-accent);font-feature-settings:'tnum' 1">{{ p.num }}</span>
+            <button onClick="{{ p.open }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:500">{{ p.name }}</span><span style="font-size:13px;color:var(--color-neutral-300)">{{ p.why }}</span></button>
+            <span style="font-size:15px;white-space:nowrap">{{ p.priceText }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--color-neutral-800)">
+        <span style="font-size:18px;font-weight:500">Итого {{ quizTotal }}</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button class="btn btn-ghost" onClick="{{ quizRestart }}">Пройти заново</button>
+          <button class="btn btn-primary" onClick="{{ quizAddAll }}">Добавить набор в корзину</button>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+</sc-if>
+
+<!-- ===== DELIVERY ===== -->
+<sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:48px 0 72px;max-width:820px">
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(30px,4vw,44px);letter-spacing:-0.015em;margin:0 0 36px">Доставка и возврат</h1>
+    <div style="display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:16px 32px;padding:24px 0;border-top:1px solid var(--color-neutral-800)">
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:20px;margin:0">Срок</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:25px;color:var(--color-neutral-200)">
+        <p style="margin:0">После того, как вы оплатили заказ, вам придёт письмо на ваш электронный адрес почты. Там вы увидите чек об оплате.</p>
+        <p style="margin:0">Сбор и отправка вашей посылки осуществляется в течение 1–3 рабочих дней с момента оплаты. День оплаты не учитывается. Суббота и воскресенье выходной.</p>
+        <p style="margin:0">Сроки доставки зависят от выбранной вами ТК. После отправки заказа наш менеджер обязательно пришлет вам трек номер.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:16px 32px;padding:24px 0;border-top:1px solid var(--color-neutral-800)">
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:20px;margin:0">Стоимость</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:25px;color:var(--color-neutral-200)">
+        <p style="margin:0">Доставка платная. Стоимость в среднем 280–350 руб. Мы отправляем заказы через Почту России или СДЭК.</p>
+        <p style="margin:0">Окончательная стоимость зависит от веса, объема и удалённости — её рассчитает корзина при оформлении.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:16px 32px;padding:24px 0;border-top:1px solid var(--color-neutral-800)">
+      <h2 style="font-family:var(--font-heading);font-weight:500;font-size:20px;margin:0">Возврат</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:25px;color:var(--color-neutral-200)">
+        <p style="margin:0">Клиент вправе отказаться от заказанного Товара в любое время до его получения, а после получения Товара — в течение 7 (семи) дней, не считая дня покупки.</p>
+        <p style="margin:0">Возврат возможен, если сохранены его товарный вид, потребительские свойства, а также документ, подтверждающий факт и условия покупки.</p>
+        <p style="margin:0">Деньги возвращаются не позднее чем через 10 дней со дня предъявления требования. Для товара ненадлежащего качества — замена, уменьшение цены или возврат суммы по закону «О защите прав потребителей».</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;padding-top:24px;border-top:1px solid var(--color-neutral-800)">
+      <a class="btn btn-primary" href="tel:+79225375461">Позвонить Татьяне: +7 922 537-54-61</a>
+      <button class="btn btn-ghost" onClick="{{ goCatalog }}">В каталог</button>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ===== CHECKOUT ===== -->
+<sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:40px 0 72px">
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(30px,4vw,44px);letter-spacing:-0.015em;margin:0 0 28px">Оформление заказа</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,5vw,56px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div>
+          <div style="font-size:14px;margin-bottom:10px">Как оформить</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+            <sc-for list="{{ modeOpts }}" as="o" hint-placeholder-count="2">
+              <button onClick="{{ o.pick }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:var(--radius-md);border:1px solid {{ o.bd }};background:{{ o.bg }}">
+                <span style="font-size:15px;font-weight:500">{{ o.label }}</span><span style="font-size:13px;line-height:18px;color:var(--color-neutral-300)">{{ o.hint }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+          <div class="field"><label>Ваше имя *</label><input class="input" value="{{ form.name }}" onChange="{{ on.name }}" placeholder="Анна"></div>
+          <div class="field"><label>Ваш телефон *</label><input class="input" value="{{ form.phone }}" onChange="{{ on.phone }}" placeholder="+7 ___ ___-__-__" inputMode="tel"></div>
+          <div class="field"><label>Ваш Email</label><input class="input" value="{{ form.email }}" onChange="{{ on.email }}" placeholder="Для чека об оплате" type="email"></div>
+          <div class="field"><label>Ссылка ВКонтакте</label><input class="input" value="{{ form.vk }}" onChange="{{ on.vk }}" placeholder="vk.com/…"></div>
+        </div>
+        <sc-if value="{{ isManagerMode }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="font-size:14px;margin-bottom:10px">Где удобнее общаться</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ channelOpts }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.pick }}" style="all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;font-size:14px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <div>
+          <div style="font-size:14px;margin-bottom:10px">Доставка</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+            <sc-for list="{{ delivOpts }}" as="o" hint-placeholder-count="2">
+              <button onClick="{{ o.pick }}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;gap:10px;padding:14px;border-radius:var(--radius-md);border:1px solid {{ o.bd }};background:{{ o.bg }}">
+                <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:500">{{ o.label }}</span><span style="font-size:13px;color:var(--color-neutral-300)">{{ o.hint }}</span></span>
+                <span style="font-size:14px;white-space:nowrap">{{ o.cost }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+          <div class="field"><label>Город</label><input class="input" value="{{ form.city }}" onChange="{{ on.city }}" placeholder="Оренбург"></div>
+          <div class="field"><label>{{ addrLabel }}</label><input class="input" value="{{ form.address }}" onChange="{{ on.address }}" placeholder="{{ addrPh }}"></div>
+        </div>
+      </div>
+      <aside style="position:sticky;top:88px;display:flex;flex-direction:column;gap:14px;padding:20px;background:var(--color-surface);border-radius:var(--radius-md);border:1px solid var(--color-neutral-800)">
+        <div style="font-size:16px;font-weight:500">Ваш заказ</div>
+        <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px">
+            <span style="display:flex;gap:8px;align-items:center"><span style="width:10px;height:10px;border-radius:50%;flex:none;background:{{ l.hex }}"></span>{{ l.name }} × {{ l.qty }}</span>
+            <span style="white-space:nowrap">{{ l.totalText }}</span>
+          </div>
+        </sc-for>
+        <div style="display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--color-divider);font-size:14px;color:var(--color-neutral-200)">
+          <div style="display:flex;justify-content:space-between"><span>Товары</span><span>{{ subtotalText }}</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Доставка</span><span>{{ shipText }}</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:500"><span>Итого</span><span>{{ totalText }}</span></div>
+        <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--color-accent-200)">{{ err }}</div></sc-if>
+        <button class="btn btn-primary btn-block" onClick="{{ submit }}" style="min-height:44px">{{ submitLabel }}</button>
+        <span style="font-size:12px;line-height:17px;color:var(--color-neutral-300)">Нажимая кнопку, вы соглашаетесь с публичной офертой и политикой конфиденциальности.</span>
+      </aside>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ===== DONE ===== -->
+<sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:72px 0 96px;max-width:620px">
+    <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent)">Заказ {{ orderNo }}</div>
+    <h1 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(30px,4vw,44px);letter-spacing:-0.015em;margin:12px 0 16px">{{ doneTitle }}</h1>
+    <p style="font-size:16px;line-height:26px;color:var(--color-neutral-200);margin:0 0 28px">{{ doneText }}</p>
+    <button class="btn btn-primary" onClick="{{ goHome }}">На главную</button>
+  </section>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid var(--color-divider);padding:36px clamp(16px,5vw,64px) 40px">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;font-size:14px;line-height:22px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <img src="assets/kadilak-neo-logo.png" alt="Kadilak Neo" width="64" height="64" style="display:block;width:64px;height:64px">
+      <span style="font-weight:500">Kadilak Neo</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-weight:500">Наши контакты</span>
+      <span style="color:var(--color-neutral-300)">По любым вопросам обращайтесь к менеджеру Татьяне</span>
+      <a href="tel:+79534507311">+7 953 4507311</a>
+      <a href="tel:+79225375461">+7 922 5375461</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-weight:500">Мы в сети</span>
+      <a href="https://t.me/+Lbfz2WjDNkM3YTli" target="_blank">Telegram</a>
+      <a href="https://vk.com/pronogti56" target="_blank">ВКонтакте</a>
+      <a href="https://www.instagram.com/pronogti_56/" target="_blank">Instagram</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;color:var(--color-neutral-300)">
+      <span style="font-weight:500;color:var(--color-text)">г. Оренбург</span>
+      <a href="https://pronogti-shop.ru/privacy">Политика конфиденциальности</a>
+      <a href="https://pronogti-shop.ru/rec">Реквизиты</a>
+      <a href="https://pronogti-shop.ru/oferta">Публичная оферта</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+  <div style="height:64px"></div>
+  <nav style="position:fixed;left:0;right:0;bottom:0;z-index:25;display:grid;grid-template-columns:repeat(4,1fr);background:color-mix(in srgb,var(--color-surface) 92%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--color-divider);padding-bottom:env(safe-area-inset-bottom)">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+      <button onClick="{{ t.go }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:60px;font-size:11px;color:{{ t.fg }};position:relative">
+        <span style="width:20px;height:2px;border-radius:2px;background:{{ t.mark }};position:absolute;top:0"></span>
+        <sc-if value="{{ t.iHome }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"></path></svg></sc-if>
+        <sc-if value="{{ t.iCat }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48Z"></path></svg></sc-if>
+        <sc-if value="{{ t.iQuiz }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.3"></path><circle cx="12" cy="17" r="0.6" fill="currentColor"></circle></svg></sc-if>
+        <sc-if value="{{ t.iCart }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H80V96a8,8,0,0,0,16,0V80h64V96a8,8,0,0,0,16,0V80h40Z"></path></svg></sc-if>
+        <span>{{ t.label }}</span>
+      </button>
+    </sc-for>
+  </nav>
+</sc-if>
+
+<!-- ===== CART DRAWER ===== -->
+<sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:40;background:color-mix(in srgb,black 55%,transparent)"></div>
+  <aside style="position:fixed;top:0;right:0;bottom:0;z-index:41;width:min(420px,100%);box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-surface);box-shadow:var(--shadow-lg);border-left:1px solid var(--color-neutral-800)">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--color-divider)">
+      <span style="font-family:var(--font-heading);font-weight:500;font-size:20px">Корзина</span>
+      <button class="btn btn-ghost btn-icon" onClick="{{ closeCart }}" aria-label="Закрыть">✕</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:8px 20px">
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:48px 0;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+          <span style="font-size:15px;color:var(--color-neutral-300)">В корзине пока пусто.</span>
+          <button class="btn btn-primary" onClick="{{ goCatalog }}">В каталог</button>
+        </div>
+      </sc-if>
+      <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="0">
+        <div style="display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--color-neutral-800)">
+          <span style="width:44px;height:44px;border-radius:var(--radius-sm);background:{{ l.hex }};box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--color-text) 16%,transparent)"></span>
+          <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+            <span style="font-size:14px;font-weight:500">{{ l.name }}</span>
+            <span style="font-size:12px;color:var(--color-neutral-300)">{{ l.sub }}</span>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:4px">
+              <button onClick="{{ l.dec }}" style="all:unset;cursor:pointer;width:28px;height:28px;text-align:center;border:1px solid var(--color-neutral-700);border-radius:var(--radius-sm)">−</button>
+              <span style="min-width:24px;text-align:center;font-size:14px">{{ l.qty }}</span>
+              <button onClick="{{ l.inc }}" style="all:unset;cursor:pointer;width:28px;height:28px;text-align:center;border:1px solid var(--color-neutral-700);border-radius:var(--radius-sm)">+</button>
+              <button onClick="{{ l.remove }}" style="all:unset;cursor:pointer;font-size:12px;color:var(--color-neutral-300);margin-left:8px">Удалить</button>
+            </div>
+          </div>
+          <span style="font-size:14px;white-space:nowrap">{{ l.totalText }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:18px 20px;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:500"><span>Товары</span><span>{{ subtotalText }}</span></div>
+        <span style="font-size:13px;color:var(--color-neutral-300)">Доставку рассчитаем на следующем шаге</span>
+        <button class="btn btn-primary btn-block" onClick="{{ goCheckout }}" style="min-height:44px">Оформить заказ</button>
+      </div>
+    </sc-if>
+  </aside>
+</sc-if>
+
+<!-- toast -->
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:50%;bottom:{{ floatBottom }};transform:translateX(-50%);z-index:50;max-width:calc(100% - 32px);box-sizing:border-box;padding:12px 18px;border-radius:var(--radius-md);background:var(--color-neutral-800);border:1px solid var(--color-accent-700);box-shadow:var(--shadow-md);font-size:14px;display:flex;gap:14px;align-items:center">
+    <span>{{ toast }}</span><button onClick="{{ openCart }}" style="all:unset;cursor:pointer;color:var(--color-accent-300)">Корзина →</button>
+  </div>
+</sc-if>
+
+<!-- home variant switcher -->
+<sc-if value="{{ showSwitcher }}" hint-placeholder-val="{{ true }}">
+  <div style="position:fixed;left:16px;bottom:{{ floatBottom }};z-index:30;display:flex;gap:4px;align-items:center;padding:6px 6px 6px 12px;border-radius:999px;background:var(--color-neutral-800);border:1px solid var(--color-neutral-700);box-shadow:var(--shadow-md);font-size:12px">
+    <span style="color:var(--color-neutral-300);margin-right:4px">Главная</span>
+    <sc-for list="{{ variantOpts }}" as="v" hint-placeholder-count="3">
+      <button onClick="{{ v.pick }}" title="{{ v.title }}" style="all:unset;cursor:pointer;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;background:{{ v.bg }};color:{{ v.fg }}">{{ v.id }}</button>
+    </sc-for>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;homeVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;default&quot;:&quot;C&quot;,&quot;tsType&quot;:&quot;'A'|'B'|'C'&quot;,&quot;section&quot;:&quot;Главная&quot;},&quot;showVariantSwitcher&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Главная&quot;},&quot;defaultOrderMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pay&quot;,&quot;manager&quot;],&quot;default&quot;:&quot;pay&quot;,&quot;tsType&quot;:&quot;'pay'|'manager'&quot;,&quot;section&quot;:&quot;Заказ&quot;}}">
+const CATS = [
+  { id: 'base', name: 'Базы', note: 'Прозрачные и камуфлирующие' },
+  { id: 'top', name: 'Топы', note: 'Глянцевые и матовые' },
+  { id: 'gel', name: 'Моделирующие гели', note: '15 г и 50 г' },
+  { id: 'poly', name: 'Полигель жидкий', note: 'Для укрепления' },
+  { id: 'lak', name: 'Гель-лаки', note: 'Регулярное обновление палитры' },
+  { id: 'other', name: 'Прочие товары', note: 'Жидкости, пилки, расходники' },
+];
+const LAK = [['001 Молоко','#efe7dd'],['004 Пудра','#e7c9c1'],['007 Нюд','#d4ab93'],['010 Капучино','#a67c64'],['013 Шоколад','#5e3b2c'],['016 Роза','#e6a3ae'],['019 Фуксия','#c63a7a'],['022 Коралл','#ec6f5c'],['025 Красный','#b81d2a'],['028 Вишня','#6d1426'],['031 Лаванда','#b7a6d9'],['034 Сирень','#8c6bb8'],['037 Небо','#8fb4d9'],['040 Ночь','#23305c'],['043 Шалфей','#9fb39a'],['046 Графит','#3b3d45']].map(([n,h])=>({n,h}));
+const CAMO = [['Молочная','#f1e4da'],['Нежно-розовая','#efcfcf'],['Нюд','#dcb59f'],['Персик','#efc4a8']].map(([n,h])=>({n,h}));
+const GEL = [['Прозрачный','#e4e6ee'],['Молочный','#f1e6dc'],['Розовый','#f0c7cc'],['Нюд','#d9b39c'],['Беж','#e3c7ad']].map(([n,h])=>({n,h}));
+const POLY = [['Прозрачный','#e4e6ee'],['Молочный','#f1e6dc'],['Камуфляж','#eccbc3']].map(([n,h])=>({n,h}));
+const P = [
+  { id:'b1', cat:'base', name:'База прозрачная', vol:'15 мл', price:390, pop:1, desc:'Каучуковая прозрачная база средней густоты. Хорошо выравнивает ногтевую пластину и держит покрытие без сколов.' },
+  { id:'b2', cat:'base', name:'База прозрачная', vol:'30 мл', price:650, pop:6, desc:'Та же прозрачная база в большом флаконе — выгоднее для мастеров.' },
+  { id:'b3', cat:'base', name:'База камуфлирующая', vol:'15 мл', price:450, pop:3, colors:CAMO, desc:'Плотная база с оттенком: скрывает недостатки пластины и подходит для однотонного френча.' },
+  { id:'t1', cat:'top', name:'Топ без липкого слоя', vol:'15 мл', price:390, pop:2, desc:'Глянцевый топ без липкого слоя. Не желтеет, не требует снятия дисперсии.' },
+  { id:'t2', cat:'top', name:'Топ матовый', vol:'15 мл', price:420, pop:9, desc:'Бархатистый матовый финиш без липкого слоя.' },
+  { id:'g1', cat:'gel', name:'Гель моделирующий', vol:'15 г', price:450, pop:5, colors:GEL, desc:'Самовыравнивающийся гель для наращивания и укрепления. Не течёт в боковые валики.' },
+  { id:'g2', cat:'gel', name:'Гель моделирующий', vol:'50 г', price:1100, pop:8, colors:GEL, desc:'Моделирующий гель в большой банке для работы в салоне.' },
+  { id:'p1', cat:'poly', name:'Полигель жидкий для укрепления', vol:'15 мл', price:490, pop:4, colors:POLY, desc:'Жидкий полигель во флаконе с кисточкой: укрепляет натуральные ногти, наносится как база.' },
+  { id:'l1', cat:'lak', name:'Гель-лак', vol:'8 мл', price:250, pop:0, colors:LAK, desc:'Плотные пигментированные гель-лаки, перекрывают в 1–2 слоя. Палитра регулярно пополняется.' },
+  { id:'o1', cat:'other', name:'Обезжириватель', vol:'100 мл', price:200, pop:7, desc:'Обезжириватель и средство для снятия липкого слоя.' },
+  { id:'o2', cat:'other', name:'Пилки 100/180', vol:'5 шт', price:250, pop:10, desc:'Пилки средней жёсткости для натуральных и искусственных ногтей.' },
+  { id:'o3', cat:'other', name:'Безворсовые салфетки', vol:'300 шт', price:180, pop:11, desc:'Салфетки без ворса для обезжиривания и снятия дисперсии.' },
+];
+const byId = id => P.find(p => p.id === id);
+const catName = id => (CATS.find(c => c.id === id) || {}).name;
+const rub = n => n.toLocaleString('ru-RU') + ' ₽';
+const SHIP = { cdek: 350, post: 280 };
+// Ссылки ведут на поиск; замените на прямые ссылки карточек товара
+const MP = [
+  { label:'Ozon', full:'Ozon', url:'https://www.ozon.ru/search/?text=' },
+  { label:'WB', full:'Wildberries', url:'https://www.wildberries.ru/catalog/0/search.aspx?search=' },
+  { label:'Авито', full:'Авито', url:'https://www.avito.ru/rossiya?q=' },
+  { label:'Я.Маркет', full:'Яндекс Маркет', url:'https://market.yandex.ru/search?text=' },
+];
+const QUIZ = [
+  { key:'who', q:'Для кого покупаете?', opts:[
+    { v:'self', label:'Для себя', hint:'Маникюр дома, небольшие объёмы' },
+    { v:'pro', label:'Я мастер', hint:'Работаю с клиентами, нужны большие флаконы' } ] },
+  { key:'task', q:'Что хотите сделать?', opts:[
+    { v:'strong', label:'Укрепить свои ногти', hint:'Натуральная длина, ногти ломаются или слоятся' },
+    { v:'ext', label:'Нарастить длину', hint:'Моделирование гелем' },
+    { v:'color', label:'Цветное покрытие', hint:'Гель-лак на базу' },
+    { v:'all', label:'Собрать всё с нуля', hint:'Первый набор для маникюра' } ] },
+];
+const WHY = { b1:'Основа под любое покрытие', b2:'Основа под любое покрытие, большой флакон', b3:'Выравнивает и маскирует пластину', t1:'Защищает и даёт глянец', p1:'Укрепляет натуральный ноготь', g1:'Для моделирования длины', g2:'Для моделирования длины, выгодный объём', l1:'Выберите цвет в карточке', o1:'Подготовка ногтя и снятие дисперсии', o2:'Опил формы', o3:'Для обезжиривания' };
+
+class Component extends DCLogic {
+  state = { view:'home', cat:'all', sort:'pop', pid:null, color:0, qty:1, cart:[], cartOpen:false,
+    form:{ name:'', phone:'', email:'', vk:'', city:'', address:'' }, deliv:'cdek', mode:null, channel:'tg',
+    quiz:{}, qstep:0, homeV:null, err:'', orderNo:'', toast:'' };
+
+  go(view, extra = {}) { this.setState({ view, cartOpen:false, err:'', ...extra }); try { window.scrollTo(0,0); } catch(e){} }
+  openProduct(id, color = 0) { this.go('product', { pid:id, color, qty:1 }); }
+  add(id, color, qty) {
+    const p = byId(id); const c = p.colors ? color : -1; const key = id + ':' + c;
+    this.setState(s => {
+      const cart = s.cart.slice(); const i = cart.findIndex(x => x.key === key);
+      if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + qty }; else cart.push({ key, id, color:c, qty });
+      return { cart, toast: 'Добавлено: ' + p.name + (c >= 0 ? ', ' + p.colors[c].n : '') };
+    });
+    clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast:'' }), 2600);
+  }
+  setQty(key, d) { this.setState(s => ({ cart: s.cart.map(x => x.key === key ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0) })); }
+  quizResult() {
+    const { who, task } = this.state.quiz; const pro = who === 'pro';
+    const base = pro ? 'b2' : 'b1', gel = pro ? 'g2' : 'g1';
+    const sets = { strong:[base,'p1','t1','o1'], ext:[base,gel,'t1','o1','o2'], color:[base,'l1','t1','o1'], all:[base,'b3','l1','t1','o1','o2','o3'] };
+    return sets[task] || [];
+  }
+  componentDidMount() {
+    let t = null;
+    try { t = new URLSearchParams(location.search).get('theme') || localStorage.getItem('kn-theme'); } catch(e){}
+    this._onResize = () => { const m = window.innerWidth < 720; if (m !== this.state.isMobile) this.setState({ isMobile:m }); };
+    window.addEventListener('resize', this._onResize);
+    this.setState({ theme: t === 'dark' ? 'dark' : 'light', isMobile: window.innerWidth < 720 });
+  }
+  componentDidUpdate() { document.documentElement.dataset.theme = this.state.theme || 'light'; }
+  componentWillUnmount() { clearTimeout(this._t); window.removeEventListener('resize', this._onResize); }
+
+  renderVals() {
+    const s = this.state, pr = this.props;
+    const homeV = s.homeV || pr.homeVariant || 'C';
+    const mode = s.mode || pr.defaultOrderMode || 'pay';
+    const card = p => ({ id:p.id, name:p.name, vol:p.vol, priceText: rub(p.price), catName: catName(p.cat), slotId:'prod-'+p.id,
+      dots: p.colors ? p.colors.slice(0,5) : [], more: p.colors ? (p.colors.length > 5 ? '+' + (p.colors.length - 5) : '') : '',
+      open: () => this.openProduct(p.id),
+      mp: MP.map(m => ({ label: m.label, full: m.full, href: m.url + encodeURIComponent('Kadilak Neo ' + p.name + ' ' + p.vol) })),
+      quickLabel: p.colors ? 'Выбрать цвет' : 'В корзину',
+      quick: () => p.colors ? this.openProduct(p.id) : this.add(p.id, 0, 1) });
+    const count = id => P.filter(p => p.cat === id).length;
+    const catRows = CATS.map((c,i) => ({ ...c, num: String(i+1).padStart(2,'0'), count: count(c.id), slotId:'cat-'+c.id, go: () => this.go('catalog', { cat:c.id }) }));
+    const on = (a, b) => a ? b : undefined;
+
+    let list = P.filter(p => s.cat === 'all' || p.cat === s.cat);
+    list = list.slice().sort((a,b) => s.sort === 'cheap' ? a.price - b.price : s.sort === 'exp' ? b.price - a.price : a.pop - b.pop);
+    const curCat = CATS.find(c => c.id === s.cat);
+    const activeChip = a => ({ bd: a ? 'var(--color-accent)' : 'var(--color-neutral-700)', bg: a ? 'color-mix(in srgb, var(--color-accent-900) 60%, transparent)' : 'transparent', fg: a ? 'var(--color-accent-100)' : 'var(--color-text)' });
+
+    const p = byId(s.pid) || P[0];
+    const ci = p.colors ? Math.min(s.color, p.colors.length - 1) : -1;
+    const prod = { ...card(p), desc:p.desc, hasColors: !!p.colors, colorName: ci >= 0 ? p.colors[ci].n : '', colorHex: ci >= 0 ? p.colors[ci].h : 'transparent',
+      colorCount: p.colors ? p.colors.length + ' оттенков' : '', goCat: () => this.go('catalog', { cat:p.cat }),
+      swatches: (p.colors || []).map((c,i) => ({ ...c, ring: i === ci ? 'var(--color-accent)' : 'transparent', pick: () => this.setState({ color:i }) })) };
+    const relIds = { base:['t1','l1','o1'], top:['b1','l1','o3'], gel:['b1','t1','o2'], poly:['t1','b3','o1'], lak:['b1','t1','o1'], other:['b1','t1','l1'] }[p.cat];
+
+    const lines = s.cart.map(x => { const q = byId(x.id); const c = x.color >= 0 ? q.colors[x.color] : null;
+      return { key:x.key, name:q.name, qty:x.qty, sub: q.vol + (c ? ' · ' + c.n : '') + ' · ' + rub(q.price), hex: c ? c.h : 'var(--color-neutral-700)',
+        totalText: rub(q.price * x.qty), inc: () => this.setQty(x.key, 1), dec: () => this.setQty(x.key, -1), remove: () => this.setQty(x.key, -x.qty), sum: q.price * x.qty }; });
+    const subtotal = lines.reduce((a,l) => a + l.sum, 0);
+    const cartCount = s.cart.reduce((a,x) => a + x.qty, 0);
+    const ship = SHIP[s.deliv];
+    const manager = mode === 'manager';
+
+    const qDone = s.qstep >= QUIZ.length; const qq = QUIZ[Math.min(s.qstep, QUIZ.length - 1)];
+    const qIds = qDone ? this.quizResult() : [];
+    const taskLabel = (QUIZ[1].opts.find(o => o.v === s.quiz.task) || {}).label || '';
+
+    const setF = k => e => { const v = e.target.value; this.setState(st => ({ form: { ...st.form, [k]: v } })); };
+    const views = ['home','catalog','product','quiz','delivery','checkout','done'];
+
+    const theme = s.theme || 'light'; const mob = !!s.isMobile;
+    if (typeof document !== 'undefined') document.documentElement.dataset.theme = theme;
+    const tabDefs = [['Главная','home',() => this.go('home'),'iHome'],['Каталог','catalog',() => this.go('catalog',{cat:'all'}),'iCat'],['Подбор','quiz',() => this.go('quiz',{qstep:0,quiz:{}}),'iQuiz'],['Корзина' + (cartCount ? ' · ' + cartCount : ''),'cart',() => this.setState({ cartOpen:true, toast:'' }),'iCart']];
+    return {
+      isLight: theme === 'light', isDark: theme === 'dark', themeTitle: theme === 'light' ? 'Тёмная тема' : 'Светлая тема',
+      toggleTheme: () => { const n = theme === 'light' ? 'dark' : 'light'; try { localStorage.setItem('kn-theme', n); } catch(e){} this.setState({ theme:n }); },
+      isMobile: mob, notMobile: !mob, floatBottom: mob ? '76px' : '24px',
+      tabs: tabDefs.map(([label,k,go,ic]) => { const a = k === 'cart' ? s.cartOpen : (!s.cartOpen && (s.view === k || (k === 'catalog' && s.view === 'product'))); return { label, go, fg: a ? 'var(--color-accent)' : 'var(--color-neutral-300)', mark: a ? 'var(--color-accent)' : 'transparent', iHome: ic === 'iHome', iCat: ic === 'iCat', iQuiz: ic === 'iQuiz', iCart: ic === 'iCart' }; }),
+      homeA: s.view === 'home' && homeV === 'A', homeB: s.view === 'home' && homeV === 'B', homeC: s.view === 'home' && homeV === 'C',
+      isHome: s.view === 'home', isCatalog: s.view === 'catalog', isProduct: s.view === 'product', isQuiz: s.view === 'quiz',
+      isDelivery: s.view === 'delivery', isCheckout: s.view === 'checkout', isDone: s.view === 'done',
+      goHome: () => this.go('home'), goCatalog: () => this.go('catalog', { cat:'all' }), goQuiz: () => this.go('quiz', { qstep:0, quiz:{} }),
+      goDelivery: () => this.go('delivery'), goCheckout: () => this.go('checkout'),
+      navLinks: [['Каталог','catalog',() => this.go('catalog',{cat:'all'})],['Гель-лаки','lak',() => this.go('catalog',{cat:'lak'})],['Подбор','quiz',() => this.go('quiz',{qstep:0,quiz:{}})],['Доставка','delivery',() => this.go('delivery')]]
+        .map(([label,k,go]) => ({ label, go, fg: (k === s.view || (k === 'lak' && s.view === 'catalog' && s.cat === 'lak') ) && !(k === 'catalog' && s.cat === 'lak') ? 'var(--color-accent)' : 'var(--color-text)' })),
+      catRows,
+      popular: P.slice().sort((a,b) => a.pop - b.pop).slice(0,4).map(card),
+      lakPalette: LAK.map((c,i) => ({ ...c, open: () => this.openProduct('l1', i) })),
+      taskShortcuts: QUIZ[1].opts.map(o => ({ label:o.label, go: () => this.go('quiz', { quiz:{ task:o.v }, qstep:0, _skipTask:true }) })),
+      faq: [
+        { q:'Под ваши гели нужна база?', a:'Смотреть базы', go: () => this.go('catalog', { cat:'base' }) },
+        { q:'Покажите палитру гель-лаков/гелей? На сайте не понимаю цвет', a:'Открыть палитру', go: () => this.openProduct('l1') },
+        { q:'Как выбрать то, что мне нужно? Я запуталась', a:'Пройти подбор', go: () => this.go('quiz', { qstep:0, quiz:{} }) },
+      ],
+      catTitle: curCat ? curCat.name : 'Каталог', catNote: curCat ? curCat.note : 'Все товары магазина',
+      catChips: [{ id:'all', name:'Все' }, ...CATS].map(c => ({ name:c.name, ...activeChip(s.cat === c.id), go: () => this.setState({ cat:c.id }) })),
+      sortOpts: [['pop','Популярные'],['cheap','Дешевле'],['exp','Дороже']].map(([k,label]) => ({ label, fg: s.sort === k ? 'var(--color-accent-200)' : 'var(--color-neutral-300)', bg: s.sort === k ? 'var(--color-accent-900)' : 'transparent', go: () => this.setState({ sort:k }) })),
+      catalog: list.map(card),
+      prod, qty: s.qty, qtyInc: () => this.setState({ qty: s.qty + 1 }), qtyDec: () => this.setState({ qty: Math.max(1, s.qty - 1) }),
+      addLabel: 'В корзину · ' + rub(p.price * s.qty), addCurrent: () => this.add(p.id, Math.max(ci,0), s.qty),
+      related: relIds.map(id => card(byId(id))),
+      quizAsking: !qDone, quizDone: qDone, quizStepNum: s.qstep + 1, quizQ: qq.q, quizCanBack: s.qstep > 0,
+      quizOpts: qq.opts.map(o => ({ ...o, pick: () => { const quiz = { ...s.quiz, [qq.key]: o.v }; let n = s.qstep + 1; if (n === 1 && quiz.task && s.quiz.task) n = 2; this.setState({ quiz, qstep:n }); } })),
+      quizBack: () => this.setState({ qstep: s.qstep - 1 }),
+      quizTitle: taskLabel + (s.quiz.who === 'pro' ? ' — для мастера' : ' — для себя'),
+      quizNote: s.quiz.who === 'pro' ? 'Подобрали большие объёмы там, где это выгоднее. Цвета гель-лаков и гелей выберите в карточке товара.' : 'Всё необходимое без лишнего. Цвет гель-лака можно выбрать в карточке товара.',
+      quizSet: qIds.map((id,i) => { const q = byId(id); return { num: String(i+1).padStart(2,'0'), name: q.name + ', ' + q.vol, why: WHY[id], priceText: rub(q.price), open: () => this.openProduct(id) }; }),
+      quizTotal: rub(qIds.reduce((a,id) => a + byId(id).price, 0)),
+      quizRestart: () => this.setState({ qstep:0, quiz:{} }),
+      quizAddAll: () => { qIds.forEach(id => this.add(id, 0, 1)); this.setState({ cartOpen:true }); },
+      modeOpts: [['pay','Оплатить онлайн','Сразу рассчитаем доставку, чек придёт на почту'],['manager','Заявка менеджеру','Татьяна свяжется, уточнит заказ и доставку']]
+        .map(([k,label,hint]) => ({ label, hint, bd: mode === k ? 'var(--color-accent)' : 'var(--color-neutral-700)', bg: mode === k ? 'color-mix(in srgb, var(--color-accent-900) 50%, transparent)' : 'transparent', pick: () => this.setState({ mode:k }) })),
+      isManagerMode: manager,
+      channelOpts: [['tg','Telegram'],['vk','ВКонтакте'],['wa','WhatsApp'],['call','Звонок']].map(([k,label]) => ({ label, ...activeChip(s.channel === k), pick: () => this.setState({ channel:k }) })),
+      delivOpts: [['cdek','СДЭК','До пункта выдачи'],['post','Почта России','До отделения']].map(([k,label,hint]) => ({ label, hint, cost: manager ? '' : '≈ ' + rub(SHIP[k]), bd: s.deliv === k ? 'var(--color-accent)' : 'var(--color-neutral-700)', bg: s.deliv === k ? 'color-mix(in srgb, var(--color-accent-900) 50%, transparent)' : 'transparent', pick: () => this.setState({ deliv:k }) })),
+      addrLabel: s.deliv === 'cdek' ? 'Адрес пункта СДЭК' : 'Адрес и индекс', addrPh: s.deliv === 'cdek' ? 'ул. Ленина, 10' : '460000, ул. …, д. …, кв. …',
+      form: s.form, on: { name:setF('name'), phone:setF('phone'), email:setF('email'), vk:setF('vk'), city:setF('city'), address:setF('address') },
+      cartLines: lines, subtotalText: rub(subtotal), shipText: manager ? 'рассчитает менеджер' : '≈ ' + rub(ship), totalText: rub(subtotal + (manager ? 0 : ship)),
+      hasErr: !!s.err, err: s.err, submitLabel: manager ? 'Отправить заявку' : 'Перейти к оплате',
+      submit: () => {
+        if (!lines.length) return this.setState({ err:'Корзина пуста.' });
+        if (!s.form.name.trim() || s.form.phone.replace(/\D/g,'').length < 10) return this.setState({ err:'Укажите имя и телефон.' });
+        this.go('done', { orderNo: '№ ' + (1000 + Math.floor(Math.random()*9000)), cart:[], doneMode: mode });
+      },
+      orderNo: s.orderNo,
+      doneTitle: s.doneMode === 'manager' ? 'Заявка отправлена' : 'Заказ оплачен',
+      doneText: s.doneMode === 'manager' ? 'Менеджер Татьяна свяжется с вами, уточнит заказ и стоимость доставки.' : 'Чек об оплате придёт на вашу почту. Сбор и отправка — 1–3 рабочих дня, трек-номер пришлёт менеджер.',
+      hasCart: cartCount > 0, cartEmpty: cartCount === 0, cartCount, cartOpen: s.cartOpen,
+      openCart: () => this.setState({ cartOpen:true, toast:'' }), closeCart: () => this.setState({ cartOpen:false }),
+      hasToast: !!s.toast && !s.cartOpen, toast: s.toast,
+      showSwitcher: s.view === 'home' && (pr.showVariantSwitcher ?? true),
+      variantOpts: [['A','Редакционная'],['B','Каталог'],['C','Палитра']].map(([id,title]) => ({ id, title, bg: homeV === id ? 'var(--color-accent-700)' : 'transparent', fg: homeV === id ? 'var(--color-accent-100)' : 'var(--color-neutral-200)', pick: () => this.setState({ homeV:id }) })),
+    };
+  }
+}
+</script>
+</body>
+</html>
