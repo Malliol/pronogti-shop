@@ -1,4 +1,5 @@
 import data from "@/data/catalog.json";
+import direct from "@/data/marketplace-links.json";
 
 // Каталог генерируется из выгрузки старого сайта: npm run catalog
 export type Variant = {
@@ -54,15 +55,21 @@ export const asset = (p: string) => BASE + p;
 
 export const SHIP = { cdek: 350, post: 280 } as const;
 
-// Ссылки ведут на поиск по маркетплейсу; заменить на прямые ссылки карточек, когда появятся
+// По умолчанию ссылки ведут на поиск по маркетплейсу. Прямые ссылки на карточки —
+// в src/data/marketplace-links.json: { "<slug>": { "WB": "https://…", "Ozon": "https://…" } },
+// ключ — label маркетплейса из списка ниже.
 export const MARKETPLACES = [
   { label: "Ozon", full: "Ozon", url: "https://www.ozon.ru/search/?text=" },
   { label: "WB", full: "Wildberries", url: "https://www.wildberries.ru/catalog/0/search.aspx?search=" },
   { label: "Авито", full: "Авито", url: "https://www.avito.ru/rossiya?q=" },
   { label: "Я.Маркет", full: "Яндекс Маркет", url: "https://market.yandex.ru/search?text=" },
 ];
+const DIRECT = direct as Record<string, Record<string, string>>;
 export const mpLinks = (p: Product) =>
-  MARKETPLACES.map((m) => ({ ...m, href: m.url + encodeURIComponent(`Kadilak Neo ${p.name} ${p.vol}`.trim()) }));
+  MARKETPLACES.map((m) => ({
+    ...m,
+    href: DIRECT[p.slug]?.[m.label] ?? m.url + encodeURIComponent(`Kadilak Neo ${p.name} ${p.vol}`.trim()),
+  }));
 
 export const CONTACTS = {
   manager: "Татьяна",
@@ -74,3 +81,5 @@ export const CONTACTS = {
   vk: "https://vk.com/pronogti56",
   instagram: "https://www.instagram.com/pronogti_56/",
 };
+
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://imiron.ru") + BASE;

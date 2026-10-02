@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductView } from "@/components/ProductView";
-import { asset, bySlug, coverOf, PRODUCTS, type Product } from "@/lib/catalog";
+import { asset, bySlug, coverOf, inStock, priceInfo, PRODUCTS, SITE_URL, type Product } from "@/lib/catalog";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -33,5 +33,28 @@ export default async function ProductPage({ params }: Props) {
   const p = bySlug((await params).slug);
   if (!p) notFound();
   const related = (RELATED[p.cat] ?? []).filter((s) => s !== p.slug).map(bySlug).filter(Boolean) as Product[];
-  return <ProductView p={p} related={related} />;
+  const cover = coverOf(p);
+  const { min } = priceInfo(p);
+  const stocked = p.shades ? p.shades.some(inStock) : inStock(p as { stock: number | null });
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${p.name} ${p.vol}`.trim(),
+    brand: { "@type": "Brand", name: "Kadilak Neo" },
+    description: p.descr.split("\n")[0] || undefined,
+    image: cover ? SITE_URL + cover : undefined,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "RUB",
+      price: min,
+      url: `${SITE_URL}/product/${p.slug}/`,
+      availability: `https://schema.org/${stocked ? "InStock" : "OutOfStock"}`,
+    },
+  };
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+      <ProductView p={p} related={related} />
+    </>
+  );
 }
