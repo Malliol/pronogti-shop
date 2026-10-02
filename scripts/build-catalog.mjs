@@ -10,6 +10,9 @@ import sharp from "sharp";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const src = JSON.parse(fs.readFileSync(path.join(ROOT, "data/products.json"), "utf8"));
 const OUT_IMG = path.join(ROOT, "public/img");
+// Ручные кропы свотчей: uid → [x центра, y центра, сторона] в долях кадра (сторона — от меньшей стороны).
+// Вырезают сам оттенок (ноготь/гель) без подписей и баночки; нет записи — авто-кроп.
+const CROPS = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, "swatch-crops.json"), "utf8"));
 
 // Категории сайта: порядок = порядок в меню. id — из адресов старого сайта.
 const CATS = [
@@ -65,15 +68,16 @@ async function images(p) {
   }
   if (p.images[0]) {
     const th = path.join(dir, "sw.webp");
-    if (!fs.existsSync(th)) {
+    if (CROPS[p.uid] || !fs.existsSync(th)) {
       // Свотч — квадрат из центра верхней части первого фото: там накраска,
       // а баночка/флакон обычно внизу кадра
       const file = path.join(ROOT, p.images[0]);
       const buf = await sharp(file).rotate().toBuffer();
       const { width: w, height: h } = await sharp(buf).metadata();
-      const side = Math.round(Math.min(w, h) * 0.55);
-      const left = Math.round(Math.min(Math.max(w * 0.5 - side / 2, 0), w - side));
-      const top = Math.round(Math.min(Math.max(h * 0.4 - side / 2, 0), h - side));
+      const [fx, fy, fs_] = CROPS[p.uid] ?? [0.5, 0.4, 0.55];
+      const side = Math.round(Math.min(w, h) * fs_);
+      const left = Math.round(Math.min(Math.max(w * fx - side / 2, 0), w - side));
+      const top = Math.round(Math.min(Math.max(h * fy - side / 2, 0), h - side));
       await sharp(buf).extract({ left, top, width: side, height: side }).resize(160, 160).webp({ quality: 75 }).toFile(th);
     }
   }
